@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
+//import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,7 +23,7 @@ import br.com.generation.blogPessoal.repositories.PostagemRepository;
 
 @Controller
 @RequestMapping("/postagens")
-@CrossOrigin("*") // para ser consumido de qualquer origem
+//	@CrossOrigin("*") // para ser consumido de qualquer origem
 public class PostagemController {
 
 	@Autowired // garantimos que todos os serviços da interface seja acessada a partir do

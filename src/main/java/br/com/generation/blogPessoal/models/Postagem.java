@@ -6,19 +6,17 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
+//import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
-@Table(name = "tb_postagem") // dentro do banco de dados, esses dados virarão uma tabela
+// @Table(name = "tb_postagem") // dentro do banco de dados, esses dados virarão uma tabela
 public class Postagem {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY) // no banco de dados, esse atributo vai virar uma primaryKey
-	private long id;
+	private @Id @GeneratedValue(strategy = GenerationType.IDENTITY) long id_postagem;
 
 	@NotNull
 	@Size(min = 5, max = 100)
@@ -32,12 +30,12 @@ public class Postagem {
 	private Date data = new java.sql.Date(System.currentTimeMillis()); // assim que passar um objeto por essa classe,
 																		// vai pegar a data exata da poostagem
 
-	public long getId() {
-		return id;
+	public long getId_postagem() {
+		return id_postagem;
 	}
 
-	public void setId(long id) {
-		this.id = id;
+	public void setId_postagem(long id_postagem) {
+		this.id_postagem = id_postagem;
 	}
 
 	public String getTitulo() {
@@ -62,7 +60,8 @@ public class Postagem {
 
 	public void setData(Date data) {
 		this.data = data;
-	};
+	}
+
 	/*
 	 * Existe o banco de dados isolado, e o código isolado, em sistemas diferentes.
 	 * Para eles se comunicarem, é necessário uma API. Cada linguagem tem sua API
