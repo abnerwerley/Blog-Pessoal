@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.generation.blogPessoal.models.Usuario;
 import br.com.generation.blogPessoal.repositories.UsuarioRepository;
 
+
 @RestController
 @RequestMapping("api/v1/usuario")
 public class UsuarioController {
