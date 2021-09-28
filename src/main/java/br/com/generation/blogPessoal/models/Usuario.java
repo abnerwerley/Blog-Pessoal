@@ -5,24 +5,19 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "tb_usuario") //a dependência JPA serve para transformar uma classe em uma tabela
 public class Usuario {
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id_usuario;
-	
-	@NotNull
-	private String nome;
-	
-	@NotNull
-	private String email;
-	
-	@NotNull
-	private String senha;
+
+	private @Id @GeneratedValue(strategy = GenerationType.IDENTITY) long id_usuario;
+
+	private @NotBlank String nome;
+
+	private @NotBlank String email;
+
+	private @NotBlank String senha;
 
 	public long getId_usuario() {
 		return id_usuario;
@@ -55,6 +50,5 @@ public class Usuario {
 	public void setSenha(String senha) {
 		this.senha = senha;
 	}
-	
-	
+
 }
