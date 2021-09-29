@@ -1,16 +1,18 @@
 package br.com.generation.blogPessoal.models;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-//import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 // @Table(name = "tb_postagem") // dentro do banco de dados, esses dados virarão uma tabela
@@ -18,17 +20,22 @@ public class Postagem {
 
 	private @Id @GeneratedValue(strategy = GenerationType.IDENTITY) long id_postagem;
 
-	@NotNull
-	@Size(min = 5, max = 100)
-	private String titulo;
+	private @NotBlank @Size(min = 5, max = 100) String titulo;
 
-	@NotNull
-	@Size(min = 10, max = 500)
-	private String texto;
+	private @NotBlank @Size(min = 10, max = 500) String texto;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date data = new java.sql.Date(System.currentTimeMillis()); // assim que passar um objeto por essa classe,
-																		// vai pegar a data exata da poostagem
+	@JsonFormat(pattern = "yyyy-MM-dd")
+	private LocalDate dataPostagem = LocalDate.now();
+	// vai pegar a data exata da poostagem
+	@ManyToOne
+	@JoinColumn(name = "id_usuario")
+	@JsonIgnoreProperties({ "minhasPostagens" })
+	private Usuario criador;
+
+	@ManyToOne
+	@JoinColumn(name = "id_theme")
+	@JsonIgnoreProperties({ "postagens" })
+	private Theme temaRelacionado;
 
 	public long getId_postagem() {
 		return id_postagem;
@@ -54,12 +61,28 @@ public class Postagem {
 		this.texto = texto;
 	}
 
-	public Date getData() {
-		return data;
+	public LocalDate getDataPostagem() {
+		return dataPostagem;
 	}
 
-	public void setData(Date data) {
-		this.data = data;
+	public void setDataPostagem(LocalDate dataPostagem) {
+		this.dataPostagem = dataPostagem;
+	}
+
+	public Usuario getCriador() {
+		return criador;
+	}
+
+	public void setCriador(Usuario criador) {
+		this.criador = criador;
+	}
+
+	public Theme getTemaRelacionado() {
+		return temaRelacionado;
+	}
+
+	public void setTemaRelacionado(Theme temaRelacionado) {
+		this.temaRelacionado = temaRelacionado;
 	}
 
 	/*
