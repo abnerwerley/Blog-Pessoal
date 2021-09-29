@@ -8,7 +8,7 @@ import br.com.generation.blogPessoal.models.Theme;
 
 public interface ThemeRepository extends JpaRepository<Theme, Long> {
 
-	/*
+	/**
 	 * Método utilizado para pesquisa pela coluna theme da tb_theme
 	 * 
 	 * @param theme

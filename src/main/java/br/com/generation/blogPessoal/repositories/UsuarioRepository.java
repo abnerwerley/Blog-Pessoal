@@ -12,7 +12,7 @@ import br.com.generation.blogPessoal.models.Usuario;
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 	public List<Usuario> findAllByNomeContainingIgnoreCase(String nome);// consulta pelo títulos de postagens
 
-	/*
+	/**
 	 * Método utilizado para pesquisa pela coluna email da tb_usuario
 	 * 
 	 * @param email
@@ -26,7 +26,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 	 */
 	public Optional<Usuario> findByEmail(String email); // faz pesquisa de usuários por email
 
-	/*
+	/**
 	 * Método utilizado para pesquisar pela coluna nome da tb_usuario
 	 * 
 	 * @param nome

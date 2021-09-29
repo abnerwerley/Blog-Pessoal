@@ -1,12 +1,17 @@
 package br.com.generation.blogPessoal.models;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 public class Usuario {
@@ -18,6 +23,10 @@ public class Usuario {
 	private @NotBlank String email;
 
 	private @NotBlank String senha;
+
+	@OneToMany(mappedBy = "criador", cascade = CascadeType.REMOVE)
+	@JsonIgnoreProperties({ "criador" })
+	private List<Postagem> minhasPostagens = new ArrayList<>();
 
 	public long getId_usuario() {
 		return id_usuario;
@@ -49,6 +58,14 @@ public class Usuario {
 
 	public void setSenha(String senha) {
 		this.senha = senha;
+	}
+
+	public List<Postagem> getMinhasPostagens() {
+		return minhasPostagens;
+	}
+
+	public void setMinhasPostagens(List<Postagem> minhasPostagens) {
+		this.minhasPostagens = minhasPostagens;
 	}
 
 }
