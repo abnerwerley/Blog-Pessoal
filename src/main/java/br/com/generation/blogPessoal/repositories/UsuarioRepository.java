@@ -10,6 +10,7 @@ import br.com.generation.blogPessoal.models.Usuario;
 
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
+	
 	public List<Usuario> findAllByNomeContainingIgnoreCase(String nome);// consulta pelo títulos de postagens
 
 	/**
