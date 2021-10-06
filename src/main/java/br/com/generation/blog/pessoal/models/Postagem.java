@@ -1,4 +1,4 @@
-package br.com.generation.blogPessoal.models;
+package br.com.generation.blog.pessoal.models;
 
 import java.time.LocalDate;
 
@@ -26,7 +26,7 @@ public class Postagem {
 
 	@JsonFormat(pattern = "yyyy-MM-dd")
 	private LocalDate dataPostagem = LocalDate.now();
-	// vai pegar a data exata da poostagem
+	// vai pegar a data exata da postagem
 	@ManyToOne
 	@JoinColumn(name = "id_usuario")
 	@JsonIgnoreProperties({ "minhasPostagens" })
@@ -84,6 +84,8 @@ public class Postagem {
 	public void setTemaRelacionado(Theme temaRelacionado) {
 		this.temaRelacionado = temaRelacionado;
 	}
+
+	
 
 	/*
 	 * Existe o banco de dados isolado, e o código isolado, em sistemas diferentes.

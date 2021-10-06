@@ -1,4 +1,4 @@
-package br.com.generation.blogPessoal.models;
+package br.com.generation.blog.pessoal.models;
 
 import java.util.ArrayList;
 import java.util.List;

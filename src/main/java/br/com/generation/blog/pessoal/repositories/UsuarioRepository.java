@@ -1,4 +1,4 @@
-package br.com.generation.blogPessoal.repositories;
+package br.com.generation.blog.pessoal.repositories;
 
 import java.util.List;
 import java.util.Optional;
@@ -6,7 +6,7 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import br.com.generation.blogPessoal.models.Usuario;
+import br.com.generation.blog.pessoal.models.Usuario;
 
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {

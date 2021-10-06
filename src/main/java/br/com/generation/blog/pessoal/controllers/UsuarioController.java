@@ -1,4 +1,4 @@
-package br.com.generation.blogPessoal.controllers;
+package br.com.generation.blog.pessoal.controllers;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,9 +17,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.generation.blogPessoal.models.Usuario;
-import br.com.generation.blogPessoal.repositories.UsuarioRepository;
-import br.com.generation.blogPessoal.services.UsuarioServices;
+import br.com.generation.blog.pessoal.models.Usuario;
+import br.com.generation.blog.pessoal.repositories.UsuarioRepository;
+import br.com.generation.blog.pessoal.services.UsuarioServices;
 
 @RestController
 @RequestMapping("api/v1/usuario")
@@ -41,7 +41,6 @@ public class UsuarioController {
 		} else {
 			return ResponseEntity.status(200).body(objetoLista); //
 		}
-		// return repositorio.findAll();
 	}
 
 	// Verificará se o o usuário com id digitado existe pelo repositório através do

@@ -1,12 +1,12 @@
-package br.com.generation.blogPessoal.services;
+package br.com.generation.blog.pessoal.services;
 
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.generation.blogPessoal.models.Usuario;
-import br.com.generation.blogPessoal.repositories.UsuarioRepository;
+import br.com.generation.blog.pessoal.models.Usuario;
+import br.com.generation.blog.pessoal.repositories.UsuarioRepository;
 
 
 @Service

@@ -1,10 +1,10 @@
-package br.com.generation.blogPessoal.repositories;
+package br.com.generation.blog.pessoal.repositories;
 
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import br.com.generation.blogPessoal.models.Theme;
+import br.com.generation.blog.pessoal.models.Theme;
 
 public interface ThemeRepository extends JpaRepository<Theme, Long> {
 
