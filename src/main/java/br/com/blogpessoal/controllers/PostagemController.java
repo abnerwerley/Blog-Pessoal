@@ -1,4 +1,4 @@
-package br.com.generation.blog.pessoal.controllers;
+package br.com.blogpessoal.controllers;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,8 +18,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import br.com.generation.blog.pessoal.models.Postagem;
-import br.com.generation.blog.pessoal.repositories.PostagemRepository;
+import br.com.blogpessoal.models.Postagem;
+import br.com.blogpessoal.repositories.PostagemRepository;
 
 @Controller
 @RequestMapping("/api/v1/postagem")

@@ -1,4 +1,4 @@
-package br.com.generation.blog.pessoal.modelsDTOs;
+package br.com.blogpessoal.modelsDTOs;
 
 /**
  * Espelho para retornar credênciais para o sistema

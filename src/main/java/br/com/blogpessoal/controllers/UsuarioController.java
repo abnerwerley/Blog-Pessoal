@@ -1,4 +1,4 @@
-package br.com.generation.blog.pessoal.controllers;
+package br.com.blogpessoal.controllers;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,9 +17,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.generation.blog.pessoal.models.Usuario;
-import br.com.generation.blog.pessoal.repositories.UsuarioRepository;
-import br.com.generation.blog.pessoal.services.UsuarioServices;
+import br.com.blogpessoal.models.Usuario;
+import br.com.blogpessoal.repositories.UsuarioRepository;
+import br.com.blogpessoal.services.UsuarioServices;
 
 @RestController
 @RequestMapping("api/v1/usuario")

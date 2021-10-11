@@ -1,4 +1,4 @@
-package br.com.generation.blog.pessoal.modelsDTOs;
+package br.com.blogpessoal.modelsDTOs;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;

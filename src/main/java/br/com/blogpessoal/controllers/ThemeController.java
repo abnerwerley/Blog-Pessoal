@@ -1,4 +1,4 @@
-package br.com.generation.blog.pessoal.controllers;
+package br.com.blogpessoal.controllers;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.generation.blog.pessoal.models.Theme;
-import br.com.generation.blog.pessoal.repositories.ThemeRepository;
+import br.com.blogpessoal.models.Theme;
+import br.com.blogpessoal.repositories.ThemeRepository;
 
 @RestController
 @RequestMapping("api/v1/theme")

@@ -1,4 +1,4 @@
-package br.com.generation.blog.pessoal.models;
+package br.com.blogpessoal.models;
 
 import java.time.LocalDate;
 
