@@ -25,7 +25,7 @@ import br.com.blogpessoal.repositories.UsuarioRepository;
 import br.com.blogpessoal.services.UsuarioServices;
 
 @RestController
-@RequestMapping("api/v1/usuario")
+@RequestMapping("/api/v1/usuario")
 @CrossOrigin(allowedHeaders = "*", origins = "*")
 public class UsuarioController {
 

@@ -13,8 +13,8 @@ import javax.validation.constraints.Size;
  */
 public class UsuarioLoginDTO {
 
-	private @NotBlank @Email String email; // Necessario Para Login
-	private @NotBlank @Size(min = 5, max = 15) String senha; // Necessario Para Login
+	private @NotBlank @Email String email;
+	private @NotBlank @Size(min = 5, max = 15) String senha;
 
 	public String getEmail() {
 		return email;
