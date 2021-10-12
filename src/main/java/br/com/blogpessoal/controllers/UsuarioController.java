@@ -6,6 +6,7 @@ import java.util.Optional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,8 +17,11 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import br.com.blogpessoal.models.Usuario;
+import br.com.blogpessoal.modelsDTOs.CredenciaisDTO;
+import br.com.blogpessoal.modelsDTOs.UsuarioLoginDTO;
 import br.com.blogpessoal.repositories.UsuarioRepository;
 import br.com.blogpessoal.services.UsuarioServices;
 
@@ -26,15 +30,15 @@ import br.com.blogpessoal.services.UsuarioServices;
 @CrossOrigin(allowedHeaders = "*", origins = "*")
 public class UsuarioController {
 
-	private @Autowired UsuarioRepository repository;
-	private @Autowired UsuarioServices services;
+	private @Autowired UsuarioRepository repositorio;
+	private @Autowired UsuarioServices servicos;
 
-	// esse método usará o método findALl do repositório para fazer uma pesquisa, e
-	// retornará um ResponseEntity (200) com um body de lista caso haja algum
+	// Método usará o método findAll, e retornará um ResponseEntity (200) com um
+	// body de lista caso haja algum
 	// usuario, se não houver devolverá um ResponseEntity(204 no content)
 	@GetMapping("/todos")
 	public ResponseEntity<List<Usuario>> pegarTodos() {
-		List<Usuario> objetoLista = repository.findAll();
+		List<Usuario> objetoLista = repositorio.findAll();
 
 		if (objetoLista.isEmpty()) {
 			return ResponseEntity.status(204).build();// o build vai montar toda a resposta(combo) do status 204
@@ -43,34 +47,41 @@ public class UsuarioController {
 		}
 	}
 
-	// Verificará se o o usuário com id digitado existe pelo repositório através do
-	// método findById
-	// Se existir, ResponseEntity(200), o usuário será mostrado, se não,
-	// ResponseEntity(204)
+	// Método que procur por id, se o id existir, status 200.body; se não existir
+	// status not found e mensagem para usuário
+
 	@GetMapping("/{id_usuario}")
 	public ResponseEntity<Usuario> getById(@PathVariable(value = "id_usuario") Long idUsuario) {
-		Optional<Usuario> objetoOptional = repository.findById(idUsuario);
-
-		if (objetoOptional.isPresent()) {
-			return ResponseEntity.status(200).body(objetoOptional.get());
-		} else {
-			return ResponseEntity.status(204).build();
-		}
+		return repositorio.findById(idUsuario).map(resp -> ResponseEntity.status(200).body(resp)).orElseThrow(() -> {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Id inexistente, insira um id válido.");
+		});
 	}
 
 	// Utiliza a regra de nogócio para ver se o email informado já existe(já foi
 	// cadastrado anteriormente), se não, ele será salvo no banco de
 	// dados(cadastrado), se existir, ResponseEntity(400 - Bad Request)
+
 	@PostMapping("/salvar")
 	public ResponseEntity<Object> salvar(@Valid @RequestBody Usuario novoUsuario) {
-		return services.cadastrarUsuario(novoUsuario).map(resp -> ResponseEntity.status(201).body(resp))
-				.orElse(ResponseEntity.status(400).build());
+		return servicos.cadastrarUsuario(novoUsuario).map(resp -> ResponseEntity.status(201).body(resp))
+				.orElseThrow(() -> {
+					throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+							"E-mail inexistente,insira um e-mail válido.");
+				});
 	}
 
-	//
+	@PutMapping("/credenciais")
+	public ResponseEntity<CredenciaisDTO> credenciais(@Valid @RequestBody UsuarioLoginDTO usuarioParaAutenticar) {
+		return servicos.pegaCredenciais(usuarioParaAutenticar);
+	}
+
 	@PutMapping("/atualizar")
 	public ResponseEntity<Usuario> atualizar(@Valid @RequestBody Usuario novoUsuario) {
-		return ResponseEntity.status(201).body(repository.save(novoUsuario));
+		return servicos.atualizarUsuario(novoUsuario).map(resp -> ResponseEntity.status(201).body(resp))
+				.orElseThrow(() -> {
+					throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+							"É necessário um id de usuário para atualizar.");
+				});
 	}
 
 	// Usará o métod findById do repositório para buscar o id no bd, se existir, vai
@@ -78,15 +89,13 @@ public class UsuarioController {
 	// ResponseEntity(204 - no content), se não existir ResponseEntity(400 - bad
 	// request)
 	@DeleteMapping("/deletar/{id_usuario}")
-	public ResponseEntity<Usuario> deletar(@PathVariable(value = "id_usuario") Long idUsuario) {
-		Optional<Usuario> objetoOptional = repository.findById(idUsuario);
-
-		if (objetoOptional.isPresent()) {
-			repository.deleteById(idUsuario);
-			return ResponseEntity.status(204).build();
-		} else {
-			return ResponseEntity.status(400).build();
-		}
+	public ResponseEntity<Object> deletar(@PathVariable(value = "id_usuario") Long idUsuario) {
+		return repositorio.findById(idUsuario).map(resp -> {
+			repositorio.deleteById(idUsuario);
+			return ResponseEntity.ok().build();
+		}).orElseThrow(() -> {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+					"Id inexistente, insira um id válido para deletar.");
+		});
 	}
-
 }
