@@ -28,6 +28,17 @@ public class Usuario {
 	@JsonIgnoreProperties({ "criador" })
 	private List<Postagem> minhasPostagens = new ArrayList<>();
 
+	public Usuario(@NotBlank String nome, @NotBlank String email, @NotBlank String senha) {
+		super();
+		this.nome = nome;
+		this.email = email;
+		this.senha = senha;
+	}
+
+	public Usuario() {
+		super();
+	}
+
 	public long getId_usuario() {
 		return id_usuario;
 	}
