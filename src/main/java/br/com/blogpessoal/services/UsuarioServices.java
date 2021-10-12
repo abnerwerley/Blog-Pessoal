@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.codec.Base64;
+import org.apache.commons.codec.binary.Base64;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -97,7 +97,7 @@ public class UsuarioServices {
 
 	private static String gerarToken(String email, String senha) {
 		String estrutura = email + ":" + senha;
-		byte[] estruturaBase64 = Base64.encode(estrutura.getBytes(Charset.forName("US-ASCII")));
+		byte[] estruturaBase64 = Base64.encodeBase64(estrutura.getBytes(Charset.forName("US-ASCII")));
 		return "Basic " + new String(estruturaBase64);
 	}
 
