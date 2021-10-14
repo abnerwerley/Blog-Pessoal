@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -22,10 +21,8 @@ public class SwaggerConfig {
 	public Docket api() { //o docket é o responsável por g
 		return new Docket(DocumentationType.SWAGGER_2).select()
 				.apis(RequestHandlerSelectors.basePackage("br.com.blogpessoal.controllers")).paths(PathSelectors.any()) //passa onde está localizado o controlador
-				.build().apiInfo(metadata()).useDefaultResponseMessages(false)
-				.globalResponses(HttpMethod.GET, responseMessage()).globalResponses(HttpMethod.POST, responseMessage())
-				.globalResponses(HttpMethod.PUT, responseMessage())
-				.globalResponses(HttpMethod.DELETE, responseMessage());
+				.build().apiInfo(metadata()).useDefaultResponseMessages(false);
+				
 	}
 
 	public static ApiInfo metadata() { 

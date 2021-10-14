@@ -10,8 +10,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import io.swagger.annotations.ApiModelProperty;
 
 @Entity
 public class Usuario {
@@ -20,9 +24,9 @@ public class Usuario {
 
 	private @NotBlank String nome;
 
-	private @NotBlank String email;
+	private @ApiModelProperty(example = "email@dominio.com") @NotBlank String email;
 
-	private @NotBlank String senha;
+	private @NotBlank @Size(min =8, max = 100) String senha;
 
 	@OneToMany(mappedBy = "criador", cascade = CascadeType.REMOVE)
 	@JsonIgnoreProperties({ "criador" })
