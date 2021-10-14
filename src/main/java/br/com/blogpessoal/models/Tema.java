@@ -14,40 +14,40 @@ import javax.validation.constraints.NotBlank;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
-public class Theme {
+public class Tema {
 
-	private @Id @GeneratedValue(strategy = GenerationType.IDENTITY) long id_theme;
+	private @Id @GeneratedValue(strategy = GenerationType.IDENTITY) long id_tema;
 
-	private @NotBlank String theme;
+	private @NotBlank String tema;
 
-	private @NotBlank String description;
+	private @NotBlank String descricao;
 
 	@OneToMany(mappedBy = "temaRelacionado", cascade = CascadeType.REMOVE)
 	@JsonIgnoreProperties({ "temaRelacionado" })
 	private List<Postagem> postagens = new ArrayList<>();
 
-	public long getId_theme() {
-		return id_theme;
+	public long getId_tema() {
+		return id_tema;
 	}
 
-	public void setId_theme(long id_theme) {
-		this.id_theme = id_theme;
+	public void setId_tema(long id_tema) {
+		this.id_tema = id_tema;
 	}
 
-	public String getTheme() {
-		return theme;
+	public String getTema() {
+		return tema;
 	}
 
-	public void setTheme(String theme) {
-		this.theme = theme;
+	public void setTema(String tema) {
+		this.tema = tema;
 	}
 
-	public String getDescription() {
-		return description;
+	public String getDescricao() {
+		return descricao;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
 	}
 
 	public List<Postagem> getPostagens() {
@@ -57,5 +57,7 @@ public class Theme {
 	public void setPostagens(List<Postagem> postagens) {
 		this.postagens = postagens;
 	}
+
+	
 
 }

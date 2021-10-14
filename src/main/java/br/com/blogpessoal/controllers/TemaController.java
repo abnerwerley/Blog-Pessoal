@@ -17,19 +17,19 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.blogpessoal.models.Theme;
-import br.com.blogpessoal.repositories.ThemeRepository;
+import br.com.blogpessoal.models.Tema;
+import br.com.blogpessoal.repositories.TemaRepository;
 
 @RestController
-@RequestMapping("api/v1/theme")
+@RequestMapping("api/v1/tema")
 @CrossOrigin(allowedHeaders = "*", origins = "*")
-public class ThemeController {
+public class TemaController {
 
-	private @Autowired ThemeRepository repository;
+	private @Autowired TemaRepository repository;
 
 	@GetMapping("/todos")
-	public ResponseEntity<List<Theme>> ListAll() {
-		List<Theme> objetoLista = repository.findAll();
+	public ResponseEntity<List<Tema>> ListarTodos() {
+		List<Tema> objetoLista = repository.findAll();
 
 		if (objetoLista.isEmpty()) {
 			return ResponseEntity.status(204).build();// o build vai montar toda a resposta(combo) do status 204
@@ -39,8 +39,8 @@ public class ThemeController {
 	}
 
 	@GetMapping("/{id_tema}")
-	public ResponseEntity<Theme> pegarPorId(@PathVariable(value = "id_tema") Long idTema) {
-		Optional<Theme> objetoOptional = repository.findById(idTema);
+	public ResponseEntity<Tema> pegarPorId(@PathVariable(value = "id_tema") Long idTema) {
+		Optional<Tema> objetoOptional = repository.findById(idTema);
 
 		if (objetoOptional.isPresent()) {
 			return ResponseEntity.status(200).body(objetoOptional.get());
@@ -50,21 +50,21 @@ public class ThemeController {
 	}
 
 	@PostMapping("/salvar")
-	public ResponseEntity<Theme> save(@Valid @RequestBody Theme newTheme) {
-		return ResponseEntity.status(201).body(repository.save(newTheme));
+	public ResponseEntity<Tema> salvar(@Valid @RequestBody Tema novoTema) {
+		return ResponseEntity.status(201).body(repository.save(novoTema));
 	}
 
 	@PutMapping("/atualizar")
-	public ResponseEntity<Theme> update(@Valid @RequestBody Theme newTheme) {
-		return ResponseEntity.status(201).body(repository.save(newTheme));
+	public ResponseEntity<Tema> atualizar(@Valid @RequestBody Tema novoTema) {
+		return ResponseEntity.status(201).body(repository.save(novoTema));
 	}
 
 	@DeleteMapping("/deletar/{id_usuario}")
-	public ResponseEntity<Theme> delete(@PathVariable(value = "id_usuario") Long idTheme) {
-		Optional<Theme> objetoOptional = repository.findById(idTheme);
+	public ResponseEntity<Tema> deletar(@PathVariable(value = "id_usuario") Long idTema) {
+		Optional<Tema> objetoOptional = repository.findById(idTema);
 
 		if (objetoOptional.isPresent()) {
-			repository.deleteById(idTheme);
+			repository.deleteById(idTema);
 			return ResponseEntity.status(204).build();
 		} else {
 			return ResponseEntity.status(400).build();

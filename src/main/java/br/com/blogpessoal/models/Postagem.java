@@ -35,7 +35,7 @@ public class Postagem {
 	@ManyToOne
 	@JoinColumn(name = "id_theme")
 	@JsonIgnoreProperties({ "postagens" })
-	private Theme temaRelacionado;
+	private Tema temaRelacionado;
 
 	public long getId_postagem() {
 		return id_postagem;
@@ -77,15 +77,13 @@ public class Postagem {
 		this.criador = criador;
 	}
 
-	public Theme getTemaRelacionado() {
+	public Tema getTemaRelacionado() {
 		return temaRelacionado;
 	}
 
-	public void setTemaRelacionado(Theme temaRelacionado) {
+	public void setTemaRelacionado(Tema temaRelacionado) {
 		this.temaRelacionado = temaRelacionado;
 	}
-
-	
 
 	/*
 	 * Existe o banco de dados isolado, e o código isolado, em sistemas diferentes.
