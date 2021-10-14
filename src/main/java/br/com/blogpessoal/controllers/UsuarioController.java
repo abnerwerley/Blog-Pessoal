@@ -23,6 +23,9 @@ import br.com.blogpessoal.modelsDTOs.CredenciaisDTO;
 import br.com.blogpessoal.modelsDTOs.UsuarioLoginDTO;
 import br.com.blogpessoal.repositories.UsuarioRepository;
 import br.com.blogpessoal.services.UsuarioServices;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
 @RestController
 @RequestMapping("/api/v1/usuario")
@@ -32,9 +35,12 @@ public class UsuarioController {
 	private @Autowired UsuarioRepository repositorio;
 	private @Autowired UsuarioServices servicos;
 
-	// Método usará o método findAll, e retornará um ResponseEntity (200) com um
-	// body de lista caso haja algum
-	// usuario, se não houver devolverá um ResponseEntity(204 no content)
+	@ApiOperation(value = "Retorna Lista com usuários no sistema")
+	@ApiResponses(value = {
+		 @ApiResponse(code = 200, message = "Retorna Lista de usuários."),
+		 @ApiResponse(code = 204, message = "Retorna sem usuários.")
+			
+	})
 	@GetMapping("/todos")
 	public ResponseEntity<List<Usuario>> pegarTodos() {
 		List<Usuario> objetoLista = repositorio.findAll();
@@ -46,9 +52,26 @@ public class UsuarioController {
 		}
 	}
 
-	// Método que procur por id, se o id existir, status 200.body; se não existir
-	// status not found e mensagem para usuário
+	@ApiOperation(value = "Busca usuario por nome")
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message = "Retorna usuario existente ou inexistente"),
+			@ApiResponse(code = 204, message = "Retorno inexistente")
+	})
+	@GetMapping("/nome/{nome_usuario}")
+	public ResponseEntity<List<Usuario>> buscarPorNomeI(@PathVariable(value = "nome_usuario") String nome) {
+		List<Usuario> objetoLista = repositorio.findAllByNomeContainingIgnoreCase(nome);
 
+		if (objetoLista.isEmpty()) {
+			return ResponseEntity.status(204).build();
+		} else {
+			return ResponseEntity.status(200).body(objetoLista);
+		}
+	}
+	
+	@ApiOperation(value = "Busca usuário por nome")
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message = "retorna usuário existente"),
+			@ApiResponse(code = 400, message = "retorno inexistente") })
 	@GetMapping("/{id_usuario}")
 	public ResponseEntity<Usuario> getById(@PathVariable(value = "id_usuario") Long idUsuario) {
 		return repositorio.findById(idUsuario).map(resp -> ResponseEntity.status(200).body(resp)).orElseThrow(() -> {
@@ -56,10 +79,11 @@ public class UsuarioController {
 		});
 	}
 
-	// Utiliza a regra de nogócio para ver se o email informado já existe(já foi
-	// cadastrado anteriormente), se não, ele será salvo no banco de
-	// dados(cadastrado), se existir, ResponseEntity(400 - Bad Request)
-
+	@ApiOperation(value = "cadastra novo usuário no sistema.")
+	@ApiResponses(value = {
+			@ApiResponse(code = 201, message = "Usuário cadastrado."),
+			@ApiResponse(code = 400, message = "Erro de requisição.")
+	})
 	@PostMapping("/salvar")
 	public ResponseEntity<Object> salvar(@Valid @RequestBody Usuario novoUsuario) {
 		return servicos.cadastrarUsuario(novoUsuario).map(resp -> ResponseEntity.status(201).body(resp))
@@ -69,11 +93,22 @@ public class UsuarioController {
 				});
 	}
 
+	@ApiOperation(value = "Autentica usuário no sistema.")
+	@ApiResponses(value = {
+			@ApiResponse(code = 201, message = "Retorna credenciais do usuário"),
+			@ApiResponse(code = 400, message = "Erro de requisição.")
+	})
+	
 	@PutMapping("/credenciais")
 	public ResponseEntity<CredenciaisDTO> credenciais(@Valid @RequestBody UsuarioLoginDTO usuarioParaAutenticar) {
 		return servicos.pegaCredenciais(usuarioParaAutenticar);
 	}
 
+	@ApiOperation(value = "Atualiza dados de um usuário existente")
+	@ApiResponses(value = {
+			@ApiResponse(code = 201, message = "Usuário atualizado"),
+			@ApiResponse(code = 400, message = "Erro de requisição.")
+	})
 	@PutMapping("/atualizar")
 	public ResponseEntity<Usuario> atualizar(@Valid @RequestBody Usuario novoUsuario) {
 		return servicos.atualizarUsuario(novoUsuario).map(resp -> ResponseEntity.status(201).body(resp))
@@ -83,10 +118,11 @@ public class UsuarioController {
 				});
 	}
 
-	// Usará o métod findById do repositório para buscar o id no bd, se existir, vai
-	// usar o método deletById do repositório para deletá-lo e retornará um
-	// ResponseEntity(204 - no content), se não existir ResponseEntity(400 - bad
-	// request)
+	@ApiOperation(value = "Deleta um usuário existente.")
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message = "Usuário deletado."),
+			@ApiResponse(code = 401, message = "Id inválido.")
+	})
 	@DeleteMapping("/deletar/{id_usuario}")
 	public ResponseEntity<Object> deletar(@PathVariable(value = "id_usuario") Long idUsuario) {
 		return repositorio.findById(idUsuario).map(resp -> {
