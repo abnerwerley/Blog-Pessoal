@@ -58,7 +58,7 @@ public class UsuarioController {
 			@ApiResponse(code = 204, message = "Retorno inexistente")
 	})
 	@GetMapping("/nome/{nome_usuario}")
-	public ResponseEntity<List<Usuario>> buscarPorNomeI(@PathVariable(value = "nome_usuario") String nome) {
+	public ResponseEntity<List<Usuario>> buscarPorNome(@PathVariable(value = "nome_usuario") String nome) {
 		List<Usuario> objetoLista = repositorio.findAllByNomeContainingIgnoreCase(nome);
 
 		if (objetoLista.isEmpty()) {
@@ -68,7 +68,7 @@ public class UsuarioController {
 		}
 	}
 	
-	@ApiOperation(value = "Busca usuário por nome")
+	@ApiOperation(value = "Busca usuário por id")
 	@ApiResponses(value = {
 			@ApiResponse(code = 200, message = "retorna usuário existente"),
 			@ApiResponse(code = 400, message = "retorno inexistente") })
