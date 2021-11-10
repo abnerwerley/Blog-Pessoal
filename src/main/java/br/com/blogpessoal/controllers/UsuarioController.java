@@ -36,10 +36,9 @@ public class UsuarioController {
 	private @Autowired UsuarioServices servicos;
 
 	@ApiOperation(value = "Retorna Lista com usuários no sistema")
-	@ApiResponses(value = {
-		 @ApiResponse(code = 200, message = "Retorna Lista de usuários."),
-		 @ApiResponse(code = 204, message = "Retorna sem usuários.")
-			
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Retorna Lista de usuários."),
+			@ApiResponse(code = 204, message = "Retorna sem usuários.")
+
 	})
 	@GetMapping("/todos")
 	public ResponseEntity<List<Usuario>> pegarTodos() {
@@ -53,10 +52,8 @@ public class UsuarioController {
 	}
 
 	@ApiOperation(value = "Busca usuario por nome")
-	@ApiResponses(value = {
-			@ApiResponse(code = 200, message = "Retorna usuario existente ou inexistente"),
-			@ApiResponse(code = 204, message = "Retorno inexistente")
-	})
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Retorna usuario existente ou inexistente"),
+			@ApiResponse(code = 204, message = "Retorno inexistente") })
 	@GetMapping("/nome/{nome_usuario}")
 	public ResponseEntity<List<Usuario>> buscarPorNome(@PathVariable(value = "nome_usuario") String nome) {
 		List<Usuario> objetoLista = repositorio.findAllByNomeContainingIgnoreCase(nome);
@@ -67,10 +64,9 @@ public class UsuarioController {
 			return ResponseEntity.status(200).body(objetoLista);
 		}
 	}
-	
+
 	@ApiOperation(value = "Busca usuário por id")
-	@ApiResponses(value = {
-			@ApiResponse(code = 200, message = "retorna usuário existente"),
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "retorna usuário existente"),
 			@ApiResponse(code = 400, message = "retorno inexistente") })
 	@GetMapping("/{id_usuario}")
 	public ResponseEntity<Usuario> getById(@PathVariable(value = "id_usuario") Long idUsuario) {
@@ -80,12 +76,10 @@ public class UsuarioController {
 	}
 
 	@ApiOperation(value = "cadastra novo usuário no sistema.")
-	@ApiResponses(value = {
-			@ApiResponse(code = 201, message = "Usuário cadastrado."),
-			@ApiResponse(code = 400, message = "Erro de requisição.")
-	})
-	@PostMapping("/salvar")
-	public ResponseEntity<Object> salvar(@Valid @RequestBody Usuario novoUsuario) {
+	@ApiResponses(value = { @ApiResponse(code = 201, message = "Usuário cadastrado."),
+			@ApiResponse(code = 400, message = "Erro de requisição.") })
+	@PostMapping("/cadastrar")
+	public ResponseEntity<Object> cadastrar(@Valid @RequestBody Usuario novoUsuario) {
 		return servicos.cadastrarUsuario(novoUsuario).map(resp -> ResponseEntity.status(201).body(resp))
 				.orElseThrow(() -> {
 					throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
@@ -94,21 +88,17 @@ public class UsuarioController {
 	}
 
 	@ApiOperation(value = "Autentica usuário no sistema.")
-	@ApiResponses(value = {
-			@ApiResponse(code = 201, message = "Retorna credenciais do usuário"),
-			@ApiResponse(code = 400, message = "Erro de requisição.")
-	})
-	
-	@PutMapping("/credenciais")
-	public ResponseEntity<CredenciaisDTO> credenciais(@Valid @RequestBody UsuarioLoginDTO usuarioParaAutenticar) {
+	@ApiResponses(value = { @ApiResponse(code = 201, message = "Retorna credenciais do usuário"),
+			@ApiResponse(code = 400, message = "Erro de requisição.") })
+
+	@PutMapping("/logar")
+	public ResponseEntity<CredenciaisDTO> logar(@Valid @RequestBody UsuarioLoginDTO usuarioParaAutenticar) {
 		return servicos.pegaCredenciais(usuarioParaAutenticar);
 	}
 
 	@ApiOperation(value = "Atualiza dados de um usuário existente")
-	@ApiResponses(value = {
-			@ApiResponse(code = 201, message = "Usuário atualizado"),
-			@ApiResponse(code = 400, message = "Erro de requisição.")
-	})
+	@ApiResponses(value = { @ApiResponse(code = 201, message = "Usuário atualizado"),
+			@ApiResponse(code = 400, message = "Erro de requisição.") })
 	@PutMapping("/atualizar")
 	public ResponseEntity<Usuario> atualizar(@Valid @RequestBody Usuario novoUsuario) {
 		return servicos.atualizarUsuario(novoUsuario).map(resp -> ResponseEntity.status(201).body(resp))
@@ -119,10 +109,8 @@ public class UsuarioController {
 	}
 
 	@ApiOperation(value = "Deleta um usuário existente.")
-	@ApiResponses(value = {
-			@ApiResponse(code = 200, message = "Usuário deletado."),
-			@ApiResponse(code = 401, message = "Id inválido.")
-	})
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Usuário deletado."),
+			@ApiResponse(code = 401, message = "Id inválido.") })
 	@DeleteMapping("/deletar/{id_usuario}")
 	public ResponseEntity<Object> deletar(@PathVariable(value = "id_usuario") Long idUsuario) {
 		return repositorio.findById(idUsuario).map(resp -> {
