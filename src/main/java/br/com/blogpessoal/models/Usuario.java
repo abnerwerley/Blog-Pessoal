@@ -26,11 +26,7 @@ public class Usuario {
 
 	private @ApiModelProperty(example = "email@dominio.com") @NotBlank String email;
 
-	private @NotBlank @Size(min = 8, max = 100) String senha;
-
-	private String foto;
-
-	private String tipo;
+	private @NotBlank @Size(min =8, max = 100) String senha;
 
 	@OneToMany(mappedBy = "criador", cascade = CascadeType.REMOVE)
 	@JsonIgnoreProperties({ "criador" })
@@ -74,22 +70,6 @@ public class Usuario {
 
 	public void setMinhasPostagens(List<Postagem> minhasPostagens) {
 		this.minhasPostagens = minhasPostagens;
-	}
-
-	public String getFoto() {
-		return foto;
-	}
-
-	public void setFoto(String foto) {
-		this.foto = foto;
-	}
-
-	public String getTipo() {
-		return tipo;
-	}
-
-	public void setTipo(String tipo) {
-		this.tipo = tipo;
 	}
 
 }
